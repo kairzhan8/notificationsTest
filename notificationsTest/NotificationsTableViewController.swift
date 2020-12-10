@@ -71,7 +71,7 @@ class NotificationsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        cell?.textLabel?.textColor = .blue
+        cell?.textLabel?.textColor = .black
     }
     
 }
