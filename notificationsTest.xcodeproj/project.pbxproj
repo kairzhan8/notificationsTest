@@ -12,6 +12,7 @@
 		557102A82581E7AA00EF492D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 557102A72581E7AA00EF492D /* Assets.xcassets */; };
 		557102AB2581E7AA00EF492D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 557102A92581E7AA00EF492D /* LaunchScreen.storyboard */; };
 		557102B52581E84100EF492D /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557102B42581E84100EF492D /* NotificationsTableViewController.swift */; };
+		557102B72582119A00EF492D /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557102B62582119A00EF492D /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		557102AA2581E7AA00EF492D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		557102AC2581E7AA00EF492D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		557102B42581E84100EF492D /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		557102B62582119A00EF492D /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				557102A92581E7AA00EF492D /* LaunchScreen.storyboard */,
 				557102AC2581E7AA00EF492D /* Info.plist */,
 				557102B42581E84100EF492D /* NotificationsTableViewController.swift */,
+				557102B62582119A00EF492D /* Notifications.swift */,
 			);
 			path = notificationsTest;
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557102B72582119A00EF492D /* Notifications.swift in Sources */,
 				5571029F2581E7A100EF492D /* AppDelegate.swift in Sources */,
 				557102A12581E7A100EF492D /* SceneDelegate.swift in Sources */,
 				557102B52581E84100EF492D /* NotificationsTableViewController.swift in Sources */,

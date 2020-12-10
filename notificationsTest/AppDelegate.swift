@@ -11,12 +11,12 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let notificationCenter = UNUserNotificationCenter.current()
+    let notifications = Notifications()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        requestAuthorization()
-        notificationCenter.delegate = self
+        notifications.requestAuthorization()
+        notifications.notificationCenter.delegate = notifications
         return true
     }
     
@@ -37,80 +37,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-extension AppDelegate: UNUserNotificationCenterDelegate {
-
-    //MARK: - ask request to send notification
-    func requestAuthorization() {
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-            print("Permission granted: \(granted)")
-            guard granted else { return }
-            self.getNotificationSettings()
-        }
-    }
-    //MARK: - type of accesses that user give
-    func getNotificationSettings() {
-        notificationCenter.getNotificationSettings { (settings) in
-            print("Notification settings \(settings)")
-        }
-    }
-    //MARK: - notification body
-    func scheduleNotification(notificationType: String) {
-        
-        let content = UNMutableNotificationContent()
-        let userAction = "User Action"
-        
-        content.title = notificationType
-        content.body = "This is example hot to create \(notificationType)"
-        content.sound = UNNotificationSound.default
-        content.badge = 1
-        content.categoryIdentifier = userAction
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let identifier = "Local Notification"
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-        
-        notificationCenter.add(request) { (error) in
-            if let error = error {
-                print("Error \(error.localizedDescription)")
-            }
-        }
-        
-        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
-        let deleteAction = UNNotificationAction(identifier: "Delete", title: "Delete", options: [.destructive])
-        let category = UNNotificationCategory(
-            identifier: userAction,
-            actions: [snoozeAction, deleteAction],
-            intentIdentifiers: [],
-            options: [])
-        notificationCenter.setNotificationCategories([category])
-        
-    }
-    
-    //MARK: - to send notification when app is active
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound])
-    }
-    
-    //MARK: - action with notification
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        if response.notification.request.identifier == "Local Notification" {
-            print("Handling notification with identifier Local Notificatoin")
-        }
-        
-        switch response.actionIdentifier {
-        case UNNotificationDismissActionIdentifier:
-            print("Dissmiss action")
-        case UNNotificationDefaultActionIdentifier:
-            print("Default action")
-        case "Snooze":
-            print("Snooze action")
-            scheduleNotification(notificationType: "Reminder")
-        case "Delete":
-            print("Delete action")
-        default:
-            print("Unknown action")
-        }
-        completionHandler()
-    }
-    
-}
