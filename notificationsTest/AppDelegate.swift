@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         requestAuthorization()
+        notificationCenter.delegate = self
         return true
     }
     
@@ -36,8 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-extension AppDelegate {
-    
+extension AppDelegate: UNUserNotificationCenterDelegate {
+
+    //MARK: - ask request to send notification
     func requestAuthorization() {
         notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
             print("Permission granted: \(granted)")
@@ -45,13 +47,13 @@ extension AppDelegate {
             self.getNotificationSettings()
         }
     }
-    
+    //MARK: - type of accesses that user give
     func getNotificationSettings() {
         notificationCenter.getNotificationSettings { (settings) in
             print("Notification settings \(settings)")
         }
     }
-    
+    //MARK: - notification body
     func scheduleNotification(notificationType: String) {
         
         let content = UNMutableNotificationContent()
@@ -72,5 +74,17 @@ extension AppDelegate {
         }
     }
     
+    //MARK: - to send notification when app is active
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
+    
+    //MARK: - action with notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.notification.request.identifier == "Local Notification" {
+            print("Handling notification with identifier Local Notificatoin")
+        }
+        completionHandler()
+    }
     
 }
