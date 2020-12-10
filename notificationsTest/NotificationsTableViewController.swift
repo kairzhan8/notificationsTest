@@ -19,6 +19,8 @@ class NotificationsTableViewController: UITableViewController {
     "Push Notification with Firebase",
     "Push Notification with Content"]
     
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayouts()
@@ -62,7 +64,9 @@ class NotificationsTableViewController: UITableViewController {
                                       message: "After 5 seconds " + notificationType + " will appear",
                                       preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            self.appDelegate?.scheduleNotification(notificationType: notificationType)
+        }
         
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
